@@ -63,8 +63,14 @@ export default function App({ dataURL, startVH, endVH } = {}) {
     const { height } = parentBlockEl.getBoundingClientRect();
     const domain = [(startVH / 100) * viewportHeight, -height - (endVH / 100) * viewportHeight + viewportHeight];
 
-    xScale = linearScale(domain, [config.beginAt.x, config.endAt.x]);
-    yScale = linearScale(domain, [config.beginAt.y, config.endAt.y]);
+    xScale =
+      config.beginAt.x > config.endAt.x
+        ? linearScale([domain[1], domain[0]], [config.endAt.x, config.beginAt.x], true)
+        : linearScale(domain, [config.beginAt.x, config.endAt.x], true);
+    yScale =
+      config.beginAt.y > config.endAt.y
+        ? linearScale([domain[1], domain[0]], [config.endAt.y, config.beginAt.y], true)
+        : linearScale(domain, [config.beginAt.y, config.endAt.y], true);
     zoom = Math.max(viewportHeight / config.naturalViewport.height, viewportWidth / config.naturalViewport.width);
     updateTransform();
   };
