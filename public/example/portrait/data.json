@@ -1,0 +1,15 @@
+{
+  "beginAt": {
+    "x": 1250,
+    "y": 480
+  },
+  "endAt": {
+    "x": 575,
+    "y": 2370
+  },
+  "imageURL": "image.png",
+  "naturalViewport": {
+    "height": 960,
+    "width": 540
+  }
+}

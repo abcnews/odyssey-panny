@@ -1,0 +1,23 @@
+{
+  "name": "odyssey-panny",
+  "version": "1.0.0-pre",
+  "description": "Enhance Odyssey block media backgrounds with scroll-based pannable images.",
+  "license": "MIT",
+  "private": true,
+  "contributors": [
+    "Colin Gourlay <gourlay.colin@abc.net.au>"
+  ],
+  "aunty": {
+    "type": "basic"
+  },
+  "scripts": {
+    "start": "aunty serve"
+  },
+  "devDependencies": {
+    "@abcnews/aunty": "^10.5.2"
+  },
+  "dependencies": {
+    "@abcnews/alternating-case-to-object": "^2.0.0",
+    "simple-linear-scale": "^1.0.1"
+  }
+}
