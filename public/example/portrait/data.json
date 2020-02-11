@@ -1,11 +1,11 @@
 {
   "beginAt": {
-    "x": 1250,
+    "x": 1650,
     "y": 640
   },
   "endAt": {
-    "x": 750,
-    "y": 2110
+    "x": 950,
+    "y": 3160
   },
   "imageURL": "image.jpg",
   "naturalViewport": {
