@@ -52,7 +52,11 @@ export default function App({ dataURL, startVH, endVH } = {}) {
   });
 
   const updateFactors = () => {
-    const viewportHeight = window.innerHeight;
+    // Pick the best height for device, assuming a height difference under
+    // 200px signifies a browser with variable UI height such as iOS's Safari
+    const _innerHeight = window.innerHeight;
+    const _availHeight = window.screen.availHeight;
+    const viewportHeight = _availHeight && Math.abs(_availHeight - _innerHeight) < 200 ? _availHeight : _innerHeight;
     const viewportWidth = window.innerWidth;
     const { height } = parentBlockEl.getBoundingClientRect();
     const domain = [(startVH / 100) * viewportHeight, -height - (endVH / 100) * viewportHeight + viewportHeight];
@@ -81,7 +85,6 @@ export default function App({ dataURL, startVH, endVH } = {}) {
 
   Promise.all([rootElMounted, imageReady]).then(() => {
     const schedulerBasedUpdate = client => (client.hasChanged ? updateAll : updateTransform)();
-
     window.__ODYSSEY__.scheduler.enqueue(updateAll);
     window.__ODYSSEY__.scheduler.subscribe(schedulerBasedUpdate);
 
