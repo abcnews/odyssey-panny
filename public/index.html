@@ -65,7 +65,33 @@
       data-odyssey-panny-example-portrait="example/portrait/data.json"
     ></div>
     <script>
-      window.__ODYSSEY__ = true;
+      var subscribedFn;
+
+      window.__ODYSSEY__ = {
+        scheduler: {
+          enqueue: function(fn) {
+            fn();
+          },
+          subscribe: function(fn) {
+            subscribedFn = fn;
+          },
+          unsubscribe: function() {
+            subscribedFn = null;
+          }
+        }
+      };
+
+      window.addEventListener('resize', function() {
+        if (subscribedFn) {
+          subscribedFn({ hasChanged: true });
+        }
+      });
+
+      window.addEventListener('scroll', function() {
+        if (subscribedFn) {
+          subscribedFn({ hasChanged: false });
+        }
+      });
 
       if (!window.fetch) {
         document.write('<script src="https://polyfill.io/v3/polyfill.min.js?features=default%2Cfetch"></scr' + 'ipt>');
