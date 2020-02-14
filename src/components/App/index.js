@@ -51,13 +51,7 @@ export default function App({ dataURL, startVH, endVH } = {}) {
       });
   });
 
-  const updateTransform = () => {
-    const { top } = parentBlockEl.getBoundingClientRect();
-
-    imageEl.style.setProperty('transform', `scale(${zoom}) translate(${-xScale(top)}px, ${-yScale(top)}px)`);
-  };
-
-  const update = () => {
+  const updateFactors = () => {
     const viewportHeight = window.innerHeight;
     const viewportWidth = window.innerWidth;
     const { height } = parentBlockEl.getBoundingClientRect();
@@ -72,19 +66,28 @@ export default function App({ dataURL, startVH, endVH } = {}) {
         ? linearScale([domain[1], domain[0]], [config.endAt.y, config.beginAt.y], true)
         : linearScale(domain, [config.beginAt.y, config.endAt.y], true);
     zoom = Math.max(viewportHeight / config.naturalViewport.height, viewportWidth / config.naturalViewport.width);
+  };
+
+  const updateTransform = () => {
+    const { top } = parentBlockEl.getBoundingClientRect();
+
+    imageEl.style.setProperty('transform', `scale(${zoom}) translate(${-xScale(top)}px, ${-yScale(top)}px)`);
+  };
+
+  const updateAll = () => {
+    updateFactors();
     updateTransform();
   };
 
   Promise.all([rootElMounted, imageReady]).then(() => {
-    update();
+    const schedulerBasedUpdate = client => (client.hasChanged ? updateAll : updateTransform)();
 
-    window.addEventListener('resize', update);
-    window.addEventListener('scroll', updateTransform);
+    window.__ODYSSEY__.scheduler.enqueue(updateAll);
+    window.__ODYSSEY__.scheduler.subscribe(schedulerBasedUpdate);
 
     if (module.hot) {
       module.hot.dispose(() => {
-        window.removeEventListener('resize', update);
-        window.removeEventListener('scroll', updateTransform);
+        window.__ODYSSEY__.scheduler.unsubscribe(schedulerBasedUpdate);
       });
     }
   });
