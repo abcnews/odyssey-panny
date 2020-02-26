@@ -1,6 +1,6 @@
 import './polyfills';
 import * as acto from '@abcnews/alternating-case-to-object';
-import App from './components/App';
+import App from './components/App/App.svelte';
 
 const MARKER_NAME = 'panny';
 
@@ -9,7 +9,7 @@ const configs = [];
 function render() {
   configs.forEach(({ rootEl, props }) => {
     rootEl.removeChild(rootEl.firstElementChild);
-    rootEl.appendChild(new App(props).el);
+    new App({ target: rootEl, props });
   });
 }
 
@@ -72,19 +72,6 @@ if (window.__ODYSSEY__) {
   init();
 } else {
   window.addEventListener('odyssey:api', init);
-}
-
-if (module.hot) {
-  module.hot.accept('./components/App', () => {
-    try {
-      render();
-    } catch (err) {
-      import('./components/ErrorBox').then(exports => {
-        const ErrorBox = exports.default;
-        root.appendChild(new ErrorBox({ error: err }).el);
-      });
-    }
-  });
 }
 
 if (process.env.NODE_ENV === 'development') {
