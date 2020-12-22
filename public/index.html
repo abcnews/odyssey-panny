@@ -52,7 +52,7 @@
     </style>
   </head>
   <body>
-    <div class="Block" data-viewports-tall="8">
+    <!-- <div class="Block" data-viewports-tall="8">
       <div class="Block-media is-fixed">
         <div></div>
       </div>
@@ -63,31 +63,42 @@
     <div
       data-odyssey-panny-example="example/landscape/data.json"
       data-odyssey-panny-example-portrait="example/portrait/data.json"
-    ></div>
+    ></div> -->
+    <div class="Block" data-viewports-tall="8">
+      <div class="Block-media is-fixed">
+        <div></div>
+      </div>
+      <div>
+        <div
+          data-mount
+          id="pannyENCODEDw3dbi0x8iyn7hxpsqe78jl1duan02vqj8mj2x10v8hkdx794okix5u3d6ae2xmiel6rre4zxs9j0183t5bk2iq69jxr9b4uxed8stqgypv0zndkrv1rjnliw1f2s93z8a6kryd8d"
+        ></div>
+      </div>
+    </div>
     <script>
       var subscribedFn;
 
       window.__ODYSSEY__ = {
         scheduler: {
-          enqueue: function(fn) {
+          enqueue: function (fn) {
             fn();
           },
-          subscribe: function(fn) {
+          subscribe: function (fn) {
             subscribedFn = fn;
           },
-          unsubscribe: function() {
+          unsubscribe: function () {
             subscribedFn = null;
           }
         }
       };
 
-      window.addEventListener('resize', function() {
+      window.addEventListener('resize', function () {
         if (subscribedFn) {
           subscribedFn({ hasChanged: true });
         }
       });
 
-      window.addEventListener('scroll', function() {
+      window.addEventListener('scroll', function () {
         if (subscribedFn) {
           subscribedFn({ hasChanged: false });
         }
