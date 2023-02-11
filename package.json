@@ -17,7 +17,7 @@
 		"start": "aunty serve"
 	},
 	"devDependencies": {
-		"@abcnews/aunty": "^11.2.1"
+		"@abcnews/aunty": "^13.2.2"
 	},
 	"dependencies": {
 		"@abcnews/alternating-case-to-object": "^2.0.0",
